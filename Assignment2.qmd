@@ -125,8 +125,10 @@ Rationale: Segmenting customers by age and purchase activity helps marketers ide
 # Q4
 
 old_frequent_customers = email.filter(
-  pl.col("age") > 30
+  (pl.col("age") > 30) & (pl.col("n_purchase") > 5)
 )
+
+print(old_frequent_customers)
 
 ```
 
@@ -142,7 +144,11 @@ Rationale: Segmenting customers might involve creating additional columns to bet
 
 ```{python}
 
+email_purchases = email.with_columns(
+  (pl.col("total_revenue") / pl.col("n_purchase")).alias("avg_purchase_value")
+)
 
+print(email_purchases)
 
 ```
 
@@ -161,6 +167,13 @@ Rationale: analyzing marketing data often involves reporting summary statistics 
 ```{python}
 # Q6
 
+new_dataset = email.select(
+  (pl.mean("n_purchase")).alias("mean_n_purchase"),
+  (pl.min("age")).alias("min_age"),
+  (pl.sum("total_revenue")).alias("sum_total_revenue")
+)
+
+print(new_dataset)
 
 ```
 
@@ -177,6 +190,11 @@ Rationale: group-specific statistics provide useful information about different 
 ```{python}
 # Q7
 
+email.group_by("success").agg(
+  (pl.mean("age")).alias("average_age"),
+  (pl.max("n_purchase")).alias("max_n_purchase"),
+  (pl.median("total_revenue")).alias("median_total_revenue")
+)
 
 ```
 
