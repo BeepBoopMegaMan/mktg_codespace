@@ -48,6 +48,12 @@ email = pl.read_csv("https://raw.githubusercontent.com/numktg/data/main/email.cs
 # (your code goes here - remove the # for the lines containing code)
 # ...
 # ...
+name = "Alice"
+age = 30
+
+greeting = "My name is {name} and I am {age} years old."
+print(greeting)
+
 
 ```
 
