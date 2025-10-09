@@ -12,7 +12,7 @@ jupyter: python3
 ---
 
 
-# YOUR NAME HERE
+# Jack Rappaport
 
 # Data Frame Transformations
 
@@ -75,7 +75,7 @@ Use a join operation to combine df_campaigns and df_responses that will give you
 # Q1
 
 q1 = (
-
+    df_campaigns.join(df_responses, on="campaign_id", how="inner")
 )
 
 print(q1)
@@ -91,7 +91,7 @@ Use a join operation to combine df_campaigns and df_responses that ensures all r
 # Q2
 
 q2 = (
-
+    df_campaigns.join(df_responses, on="campaign_id", how="right")
 )
 
 print(q2)
@@ -108,6 +108,7 @@ Use a join operation to combine df_campaigns and df_responses that will preserve
 # Q3
 
 q3 = (
+    df_campaigns.join(df_responses, on="campaign_id", how="full", coalesce=False)
 )
 
 print(q3)
@@ -123,7 +124,7 @@ Use a join operation to filter df_campaigns to keep only those campaigns that re
 # Q4
 
 q4 = (
-
+    df_campaigns.join(df_responses, on="campaign_id", how="semi")
 )
 
 print(q4)
@@ -140,7 +141,7 @@ Use a join operation to filter df_responses to keep campaigns that do not have a
 ```{python}
 
 q5 = (
-
+    df_responses.join(df_campaigns, on="campaign_id", how="anti")
 )
 
 print(q5)
@@ -156,7 +157,7 @@ Take the df_responses dataframe. Create a pivot table that displays each custome
 ```{python}
 
 q6 = (
-
+    df_responses.pivot("campaign_id", index="customer_id", values="response")
 )
 
 q6
@@ -191,8 +192,7 @@ print(df_budgets)
 
 
 q7 = (
-
-
+    df_budgets.unpivot(["Q1","Q2","Q3","Q4"], index=["campaign_id", "campaign_name"])
 )
 
 print(q7)
